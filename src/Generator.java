@@ -9,16 +9,18 @@ public class Generator {
     private boolean hasUpperCase;
     private boolean hasNumber;
     private boolean hasSpecial;
-    //TODO try generating password until it matches given conditions
-    public Generator(int length) {
-        this.length = length;
+
+    public Generator() {
+        setLength();
         setGeneratorConditions();
-        Password p = new Password(this.password);
         this.password = generatePassword(length);
+        while(!checkConditions()) {
+            this.password = generatePassword(length);
+        }
     }
     //generates password according to given length and conditions for explanation see below:
     /*
-    * Stringbuilder is used to append characters from the respective set of characters from class Alphabet
+    * StringBuilder is used to append characters from the respective set of characters from class Alphabet
     * for loop to iterate trough each letter
     * determiner is assigned a random value between 0 (inclusive) and 4 (exclusive)
     * 0 = append random character from lowercase
@@ -72,6 +74,18 @@ public class Generator {
         return genPassword.toString();
     }
 
+    //accepts an int and sets length equal to it until its at least 4
+    private void setLength(){
+        System.out.println("Enter password length (at least 4): ");
+        while(this.length < 4) {
+            this.length = scanner.nextInt();
+            if(this.length < 4) {
+                System.out.println("Password to short. Try again: ");
+            }
+        }
+    }
+
+    //through a couple of questions sets the booleans for the password generator
     private void setGeneratorConditions() {
         String y = "Y";
         String n = "N";
@@ -126,9 +140,39 @@ public class Generator {
         }
     }
 
-    //TODO add method that checks if given password matches given conditions
-    public boolean checkConditions() {
-        return true;
+    //checks if given password matches given conditions
+    private boolean checkConditions() {
+        boolean checkLowercase = false;
+        boolean checkUppercase = false;
+        boolean checkNumber = false;
+        boolean checkSpecial = false;
+        for(int i = 0; i < this.length; i++) {
+            for (int j = 0; j < Alphabet.lowerCaseLetters.length(); j++) {
+                if (this.password.charAt(i) == Alphabet.lowerCaseLetters.charAt(j)) {
+                    checkLowercase = true;
+                    break;
+                }
+            }
+            for (int j = 0; j < Alphabet.upperCaseLetters.length(); j++) {
+                if (this.password.charAt(i) == Alphabet.upperCaseLetters.charAt(j)) {
+                    checkUppercase = true;
+                    break;
+                }
+            }
+            for (int j = 0; j < Alphabet.numbers.length(); j++) {
+                if (this.password.charAt(i) == Alphabet.numbers.charAt(j)) {
+                    checkNumber = true;
+                    break;
+                }
+            }
+            for(int j = 0; j < Alphabet.specialCharacters.length(); j++) {
+                if(this.password.charAt(i) == Alphabet.specialCharacters.charAt(j)) {
+                    checkSpecial = true;
+                    break;
+                }
+            }
+        }
+        return (this.hasLowerCase == checkLowercase) && (this.hasUpperCase == checkUppercase) && (this.hasNumber == checkNumber) && (this.hasSpecial == checkSpecial);
     }
 
     public boolean getHasLowerCase() {

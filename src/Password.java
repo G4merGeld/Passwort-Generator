@@ -1,10 +1,6 @@
 public class Password {
     private String password;
     private int length;
-    final static String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
-    final static String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    final static String numbers = "0123456789";
-    final static String[] mostUsedPasswords = {"123456", "password", "123456789", "12345", "12345678", "qwerty", "1234567", "111111", "1234567890", "123123"};
 
     public Password(String password) {
         this.password = password;
@@ -67,22 +63,25 @@ public class Password {
 
         for(int i = 0; i < password.length(); i++) {
             boolean isSpecial = true;
-            for (int j = 0; j < lowerCaseLetters.length(); j++) {
-                if (password.charAt(i) == lowerCaseLetters.charAt(j)) {
+            for (int j = 0; j < Alphabet.lowerCaseLetters.length(); j++) {
+                if (password.charAt(i) == Alphabet.lowerCaseLetters.charAt(j)) {
                     hasLowercase = true;
                     isSpecial = false;
+                    break;
                 }
             }
-            for (int j = 0; j < upperCaseLetters.length(); j++) {
-                if (password.charAt(i) == upperCaseLetters.charAt(j)) {
+            for (int j = 0; j < Alphabet.upperCaseLetters.length(); j++) {
+                if (password.charAt(i) == Alphabet.upperCaseLetters.charAt(j)) {
                     hasUpperCase = true;
                     isSpecial = false;
+                    break;
                 }
             }
-            for (int j = 0; j < numbers.length(); j++) {
-                if (password.charAt(i) == numbers.charAt(j)) {
+            for (int j = 0; j < Alphabet.numbers.length(); j++) {
+                if (password.charAt(i) == Alphabet.numbers.charAt(j)) {
                     hasNumbers = true;
                     isSpecial = false;
+                    break;
                 }
             }
             if(isSpecial){
@@ -102,13 +101,13 @@ public class Password {
             points += 2;
         } else if(password.length() > 6) {
             points++;
-        } else if(password.length() < 7) {
+        } else {
             System.out.println("Password too short.");
             return 0;
         }
-        for(int i = 0; i < mostUsedPasswords.length; i++) {
-            if(password.equals(mostUsedPasswords[i])) {
-                System.out.println("Password matches often used password \"" + mostUsedPasswords[i] + "\".");
+        for(int i = 0; i < Alphabet.mostUsedPasswords.length; i++) {
+            if(password.equals(Alphabet.mostUsedPasswords[i])) {
+                System.out.println("Password matches often used password \"" + Alphabet.mostUsedPasswords[i] + "\".");
                 return 0;
             }
         }

@@ -9,10 +9,11 @@ public class Generator {
     private boolean hasUpperCase;
     private boolean hasNumber;
     private boolean hasSpecial;
-
+    //TODO try generating password until it matches given conditions
     public Generator(int length) {
         this.length = length;
         setGeneratorConditions();
+        Password p = new Password(this.password);
         this.password = generatePassword(length);
     }
     //generates password according to given length and conditions for explanation see below:
@@ -123,6 +124,11 @@ public class Generator {
             }
             System.out.println("Say Y or N");
         }
+    }
+
+    //TODO add method that checks if given password matches given conditions
+    public boolean checkConditions() {
+        return true;
     }
 
     public boolean getHasLowerCase() {
